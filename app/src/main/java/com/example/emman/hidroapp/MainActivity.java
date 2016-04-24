@@ -1,5 +1,6 @@
 package com.example.emman.hidroapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Farm selectedFarm = (Farm)parent.getItemAtPosition(position);
                 Toast.makeText(getApplication().getBaseContext(), "Farm Name: " + selectedFarm.getFarmName(), Toast.LENGTH_LONG).show();
-
+                openFarm(selectedFarm);
             }
         });
 
@@ -104,5 +105,11 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
 // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
+    }
+
+    public void openFarm(Farm farm) {
+        Intent intent = new Intent(this, ShipsActivity.class);
+        intent.putExtra("SelectedFarm", farm);
+        startActivity(intent);
     }
 }

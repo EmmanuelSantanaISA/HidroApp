@@ -7,4 +7,5 @@
     <string name="loading_farms_message">Loading farms</string>
     <string name="farms_activity_title">Farm List</string>
     <string name="select_a_farm">Select a farm:</string>
+    <string name="farm_date_empty">Farm Start Date is empty</string>
 </resources>

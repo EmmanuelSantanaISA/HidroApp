@@ -28,8 +28,8 @@ public class FarmsTask extends AsyncTask<HidroAPI, Integer, List<Farm>> {
 
     @Override
     protected void onPreExecute() {
-        this.dialog.setMessage("Registering user...");
-        this.dialog.setTitle("Register");
+        this.dialog.setMessage(context.getString(R.string.loading_farms_message));
+        this.dialog.setTitle(context.getString(R.string.loading_farms_title));
         this.dialog.show();
     }
 
@@ -53,7 +53,7 @@ public class FarmsTask extends AsyncTask<HidroAPI, Integer, List<Farm>> {
         }
 
         if (s != null) {
-            Toast.makeText(context,  s.size() + context.getString(R.string.farms_loaded), Toast.LENGTH_LONG).show();
+            Toast.makeText(context,  s.size() + " " + context.getString(R.string.farms_loaded), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, context.getString(R.string.farms_not_loaded), Toast.LENGTH_LONG).show();
         }

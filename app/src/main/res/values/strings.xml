@@ -3,4 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="farms_loaded"> farms found</string>
     <string name="farms_not_loaded"> farms not found</string>
+    <string name="loading_farms_title">Farms</string>
+    <string name="loading_farms_message">Loading farms</string>
+    <string name="farms_activity_title">Farm List</string>
+    <string name="select_a_farm">Select a farm:</string>
 </resources>

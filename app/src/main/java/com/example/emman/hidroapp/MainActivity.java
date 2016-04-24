@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.emman.hidroapp.adapters.FarmsAdapter;
 import com.example.emman.hidroapp.tasks.FarmsCallback;
@@ -44,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
         setContentView(R.layout.content_main);
 
         lv = (ListView) findViewById(R.id.listView);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Farm selectedFarm = (Farm)parent.getItemAtPosition(position);
+                Toast.makeText(getApplication().getBaseContext(), "Farm Name: " + selectedFarm.getFarmName(), Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         // Instanciating an array list (you don't need to do this,
         // you already have yours).

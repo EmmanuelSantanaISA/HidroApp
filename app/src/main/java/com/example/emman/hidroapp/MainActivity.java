@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
         // Instanciating an array list (you don't need to do this,
         // you already have yours).
         try {
-            HidroConfig conf = new HidroConfig("192.168.1.64", 8080, "HidroGuys/webresources");
+            HidroConfig conf = new HidroConfig("hidroguys.noip.me", 5000, "HidroGuys/webresources");
+
             HidroAPI api = new HidroAPI(conf);
             FarmsTask farmsTask = new FarmsTask(this);
             farmsTask.execute(api);

@@ -10,38 +10,40 @@ import com.example.emman.hidroapp.R;
 import java.util.List;
 
 import main.HidroAPI;
-import pojo.Farm;
+import pojo.Ship;
 
 /**
  * Created by emman on 4/24/2016.
  */
-public class FarmsTask extends AsyncTask<Class, Integer, List> {
+public class LinesTask extends AsyncTask<String, Integer, List> {
     private AsyncTaskCallback callback;
     private ProgressDialog dialog;
     private Context context;
     private String className;
+    private Ship selectedShip;
     private HidroAPI api;
 
-    public FarmsTask(Context context, HidroAPI api) {
+    public LinesTask(Context context, Ship selectedFarm, HidroAPI api) {
         this.callback = (AsyncTaskCallback) context;
         this.context = context;
+        this.selectedShip = selectedFarm;
         this.api = api;
         dialog = new ProgressDialog(context);
-        className = Farm.class.getSimpleName();
+        className = Ship.class.getSimpleName();
     }
 
     @Override
     protected void onPreExecute() {
-        this.dialog.setMessage(context.getString(R.string.loading_farms_message));
-        this.dialog.setTitle(context.getString(R.string.loading_farms_title));
+        this.dialog.setMessage(context.getString(R.string.loading_farms_message) + " " + className + "s");
+        this.dialog.setTitle(className);
         this.dialog.show();
     }
 
     @Override
-    protected List doInBackground(Class... params) {
-        List farms = api.getFarms().getAll();
+    protected List doInBackground(String... params) {
+        List items = api.getLines().getByShipID(selectedShip.getShipId());
 
-        return farms;
+        return items;
     }
 
     @Override

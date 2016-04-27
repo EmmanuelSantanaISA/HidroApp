@@ -7,20 +7,22 @@
     android:elevation="10dp">
 
     <TextView
-        android:id="@+id/farmName"
+        android:id="@+id/shipName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FarmName"
         android:textSize="18dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/colorListItem1" />
+        android:textColor="@android:color/white"/>
+
 
     <TextView
-        android:id="@+id/farmLocation"
+        android:id="@+id/shipID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FarmLocation"
+
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"

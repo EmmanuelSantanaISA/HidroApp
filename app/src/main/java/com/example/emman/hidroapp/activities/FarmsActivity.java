@@ -1,4 +1,4 @@
-package com.example.emman.hidroapp;
+package com.example.emman.hidroapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,27 +6,28 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.emman.hidroapp.R;
 import com.example.emman.hidroapp.adapters.FarmsAdapter;
-import com.example.emman.hidroapp.tasks.FarmsCallback;
+import com.example.emman.hidroapp.tasks.AsyncTaskCallback;
 import com.example.emman.hidroapp.tasks.FarmsTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import main.HidroAPI;
 import main.HidroConfig;
 import pojo.Farm;
 
-public class MainActivity extends AppCompatActivity implements FarmsCallback {
+public class FarmsActivity extends AppCompatActivity implements AsyncTaskCallback {
     ListView lv;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        toolbar.setVisibility(View.VISIBLE);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,20 +54,22 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Farm selectedFarm = (Farm)parent.getItemAtPosition(position);
-                Toast.makeText(getApplication().getBaseContext(), "Farm Name: " + selectedFarm.getFarmName(), Toast.LENGTH_LONG).show();
+                Farm selectedFarm = (Farm) parent.getItemAtPosition(position);
+                //Toast.makeText(getApplication().getBaseContext(), "Farm Name: " + selectedFarm.getFarmName(), Toast.LENGTH_LONG).show();
                 openFarm(selectedFarm);
             }
         });
 
-        // Instanciating an array list (you don't need to do this,
-        // you already have yours).
+
+//        TextView textView = (TextView) findViewById(R.id.textView);
+//        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable., 0, 0, 0);
         try {
-            HidroConfig conf = new HidroConfig("hidroguys.noip.me", 5000, "HidroGuys/webresources");
+
+            HidroConfig conf = new HidroConfig(getString(R.string.server_ip), Integer.parseInt(getString(R.string.server_port)), "HidroGuys/webresources");
 
             HidroAPI api = new HidroAPI(conf);
-            FarmsTask farmsTask = new FarmsTask(this);
-            farmsTask.execute(api);
+            FarmsTask farmsTask = new FarmsTask(this, api);
+            farmsTask.execute(Farm.class);
 
             // This is the array adapter, it takes the context of the activity as a
             // first parameter, the type of list view as a second parameter and your
@@ -98,14 +104,15 @@ public class MainActivity extends AppCompatActivity implements FarmsCallback {
     }
 
     @Override
-    public void updateFarms(List<Farm> farms) {
-        // Construct the data source
+    public void updateData(List items) {
+        if (items != null) {
+            FarmsAdapter adapter = new FarmsAdapter(this, items);
+            ListView listView = (ListView) findViewById(R.id.listView);
+            listView.setAdapter(adapter);
+        }else{
+            Toast.makeText(FarmsActivity.this, "Farms not found", Toast.LENGTH_SHORT).show();
+        }
 
-// Create the adapter to convert the array to views
-        FarmsAdapter adapter = new FarmsAdapter(this, farms);
-// Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
     }
 
     public void openFarm(Farm farm) {

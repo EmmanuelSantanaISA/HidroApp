@@ -7,7 +7,7 @@ import pojo.Farm;
 /**
  * Created by emman on 4/24/2016.
  */
-public interface FarmsCallback {
+public interface AsyncTaskCallback {
 
-    void updateFarms(List<Farm> farms);
+    void updateData(List items);
 }
